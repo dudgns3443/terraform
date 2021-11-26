@@ -16,6 +16,25 @@ resource "aws_subnet" "yh_pubc" {
   }
 }
 
+resource "aws_subnet" "yh_pria" {
+  vpc_id            = aws_vpc.yhkim_vpc.id
+  cidr_block        = "10.2.2.0/24"
+  availability_zone = "ap-northeast-2a"
+  tags = {
+    "Name" = "yh-pria"
+  }
+}
+
+resource "aws_subnet" "yh_pric" {
+  vpc_id            = aws_vpc.yhkim_vpc.id
+  cidr_block        = "10.2.3.0/24"
+  availability_zone = "ap-northeast-2c"
+  tags = {
+    "Name" = "yh-pric"
+  }
+}
+
+
 resource "aws_subnet" "yh_pridba" {
   vpc_id            = aws_vpc.yhkim_vpc.id
   cidr_block        = "10.2.4.0/24"
