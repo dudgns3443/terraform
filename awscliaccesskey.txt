@@ -1,0 +1,3 @@
+aws cli confiure
+access key : AKIA3MG4NGRFVKDGGF4C
+secret key : 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
