@@ -9,10 +9,10 @@ resource "aws_ami_from_instance" "yh_ami" {
 resource "aws_launch_configuration" "yh_conf" {
   name_prefix   = "terraform-lc-example"
   image_id      = aws_ami_from_instance.yh_ami.id
-  instance_type = "t2.micro"
-  iam_instance_profile = "admin_role"
+  instance_type = var.inst_type
+  iam_instance_profile = var.role_ec2
   security_groups = [aws_security_group.yh_websg.id]
-  key_name = "lab7key"
+  key_name = var.key
   lifecycle {
     create_before_destroy = true
   }
@@ -25,11 +25,11 @@ resource "aws_placement_group" "yh_pg" {
 
 resource "aws_autoscaling_group" "yh_asg" {
   name = "asg"
-  min_size = 2
-  max_size = 4
-  health_check_grace_period = 100
-  health_check_type = "EC2"
-  desired_capacity = 2
+  min_size = var.asg_min_size
+  max_size = var.asg_max_size
+  health_check_grace_period = var.heath_check_period
+  health_check_type = var.health_check_type
+  desired_capacity = var.asg_desired_capacity
   force_delete = false
   #placement_group = aws_placement_group.yh_pg.id
   launch_configuration = aws_launch_configuration.yh_conf.name

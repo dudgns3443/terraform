@@ -1,5 +1,5 @@
 resource "aws_lb" "yh_alb" {
-    name = "yh-alb"
+    name = "${var.name}-alb"
     internal =false
     load_balancer_type = "application"
     security_groups = [aws_security_group.yh_websg.id]
@@ -9,18 +9,18 @@ resource "aws_lb" "yh_alb" {
 
 resource "aws_lb_target_group" "yh_tg" {
     name = "wordpressTG"
-    port = 80
-    protocol = "HTTP"
+    port = var.port_http
+    protocol = var.protocol_tg
     vpc_id = aws_vpc.yhkim_vpc.id
 
     health_check {
         enabled               = true
         healthy_threshold     = 3
         interval              = 5
-        matcher               = "200"
-        path                  = "/health.html" 
+        matcher               = var.status_code_suc
+        path                  = var.path_health_check 
         port                  = "traffic-port"
-        protocol              = "HTTP"
+        protocol              = var.protocol_tg
         timeout               = 2
         unhealthy_threshold   = 2 
     }
@@ -29,13 +29,13 @@ resource "aws_lb_target_group" "yh_tg" {
 # resource "aws_lb_target_group_attachment" "test" {
 #   target_group_arn = aws_lb_target_group.yh_tg.arn
 #   target_id        = aws_instance.yh_web.id
-#   port             = 80
+#   port             = var.port_http
 # }
 
 resource "aws_lb_listener" "yh_listener" {
     load_balancer_arn = aws_lb.yh_alb.arn
-    port = 80
-    protocol = "HTTP"
+    port = var.port_http
+    protocol = var.protocol_tg
 
     default_action {
         type = "forward"

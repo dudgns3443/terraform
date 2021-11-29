@@ -17,19 +17,19 @@ data "aws_ami" "amzn" {
 
 resource "aws_instance" "yh_web" {
     ami = data.aws_ami.amzn.id
-    instance_type = "t2.micro"
-    key_name = "lab7key"
+    instance_type = var.inst_type
+    key_name = var.key
     vpc_security_group_ids = [aws_security_group.yh_websg.id]
-    availability_zone = "ap-northeast-2a"
-    private_ip = "10.2.0.11"
+    availability_zone = "${var.seoul}${var.az[0]}"
+    private_ip = var.instance_private_ip
     subnet_id = aws_subnet.yh_pub[0].id
-    user_data = file("wordpress.sh")
+    user_data = file(var.userdata)
 }
 
 resource "aws_eip" "yh_eip"{
     vpc = true
     instance = aws_instance.yh_web.id
-    associate_with_private_ip = "10.2.0.11"
+    associate_with_private_ip = var.instance_private_ip
     depends_on = [aws_internet_gateway.yh_ig]
 }
 

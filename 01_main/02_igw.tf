@@ -10,7 +10,7 @@ resource "aws_route_table" "yh_rf" {
   vpc_id = aws_vpc.yhkim_vpc.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.cidr_route
     gateway_id = aws_internet_gateway.yh_ig.id
   }
   tags = {
