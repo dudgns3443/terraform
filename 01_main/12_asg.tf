@@ -30,7 +30,7 @@ resource "aws_autoscaling_group" "yh_asg" {
   health_check_grace_period = 100
   health_check_type = "EC2"
   desired_capacity = 2
-  force_delete = true
+  force_delete = false
   placement_group = aws_placement_group.yh_pg.id
   launch_configuration = aws_launch_configuration.yh_conf.name
   vpc_zone_identifier = [aws_subnet.yh_puba.id,aws_subnet.yh_pubc.id]
