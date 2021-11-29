@@ -31,9 +31,9 @@ resource "aws_autoscaling_group" "yh_asg" {
   health_check_type = "EC2"
   desired_capacity = 2
   force_delete = false
-  placement_group = aws_placement_group.yh_pg.id
+  #placement_group = aws_placement_group.yh_pg.id
   launch_configuration = aws_launch_configuration.yh_conf.name
-  vpc_zone_identifier = [aws_subnet.yh_puba.id,aws_subnet.yh_pubc.id]
+  vpc_zone_identifier = [aws_subnet.yh_pub[0].id,aws_subnet.yh_pub[1].id]
   target_group_arns = [aws_lb_target_group.yh_tg.arn]
 }
 

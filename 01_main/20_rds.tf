@@ -15,5 +15,5 @@ resource "aws_db_instance" "yh_db"{
 }
 resource "aws_db_subnet_group" "db_subnet" {
   name = "db-subnet2"
-  subnet_ids = [aws_subnet.yh_pridba.id,aws_subnet.yh_pridbc.id]
+  subnet_ids = [aws_subnet.yh_pridb[0].id,aws_subnet.yh_pridb[1].id]
 }

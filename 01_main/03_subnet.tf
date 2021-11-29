@@ -1,55 +1,29 @@
-resource "aws_subnet" "yh_puba" {
+resource "aws_subnet" "yh_pub" {
+  count = length(var.pub_cidr)
   vpc_id            = aws_vpc.yhkim_vpc.id
-  cidr_block        = "10.2.0.0/24"
-  availability_zone = "ap-northeast-2a"
+  cidr_block        = var.pub_cidr[count.index]
+  availability_zone = "${var.seoul}${var.az[count.index]}"
   tags = {
-    "Name" = "yhkim-puba"
+    "Name" = "${var.name}-pub${var.az[count.index]}"
   }
 }
 
-resource "aws_subnet" "yh_pubc" {
+resource "aws_subnet" "yh_pri" {
+  count = length(var.pri_cidr)
   vpc_id            = aws_vpc.yhkim_vpc.id
-  cidr_block        = "10.2.1.0/24"
-  availability_zone = "ap-northeast-2c"
+  cidr_block        = var.pri_cidr[count.index]
+  availability_zone = "${var.seoul}${var.az[count.index]}"
   tags = {
-    "Name" = "yhkim-pubc"
+    "Name" = "${var.name}-pri${var.az[count.index]}"
   }
 }
 
-resource "aws_subnet" "yh_pria" {
+resource "aws_subnet" "yh_pridb" {
+  count = length(var.db_cidr)
   vpc_id            = aws_vpc.yhkim_vpc.id
-  cidr_block        = "10.2.2.0/24"
-  availability_zone = "ap-northeast-2a"
+  cidr_block        = var.db_cidr[count.index]
+  availability_zone = "${var.seoul}${var.az[count.index]}"
   tags = {
-    "Name" = "yh-pria"
-  }
-}
-
-resource "aws_subnet" "yh_pric" {
-  vpc_id            = aws_vpc.yhkim_vpc.id
-  cidr_block        = "10.2.3.0/24"
-  availability_zone = "ap-northeast-2c"
-  tags = {
-    "Name" = "yh-pric"
-  }
-}
-
-
-resource "aws_subnet" "yh_pridba" {
-  vpc_id            = aws_vpc.yhkim_vpc.id
-  cidr_block        = "10.2.4.0/24"
-  availability_zone = "ap-northeast-2a"
-  tags = {
-    "Name" = "yh-pridba"
-  }
-}
-
-
-resource "aws_subnet" "yh_pridbc" {
-  vpc_id            = aws_vpc.yhkim_vpc.id
-  cidr_block        = "10.2.5.0/24"
-  availability_zone = "ap-northeast-2c"
-  tags = {
-    "Name" = "yh-pridbc"
+    "Name" = "${var.name}-pri${var.az[count.index]}"
   }
 }

@@ -18,12 +18,8 @@ resource "aws_route_table" "yh_rf" {
   }
 }
 
-resource "aws_route_table_association" "yh_rtas_a" {
-  subnet_id      = aws_subnet.yh_puba.id
-  route_table_id = aws_route_table.yh_rf.id
-}
-
-resource "aws_route_table_association" "yh_rtas_c" {
-  subnet_id      = aws_subnet.yh_pubc.id
+resource "aws_route_table_association" "yh_rtas" {
+  count = length(var.pub_cidr)
+  subnet_id      = aws_subnet.yh_pub[count.index].id
   route_table_id = aws_route_table.yh_rf.id
 }

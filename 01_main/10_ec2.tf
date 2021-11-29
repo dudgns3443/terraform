@@ -22,7 +22,7 @@ resource "aws_instance" "yh_web" {
     vpc_security_group_ids = [aws_security_group.yh_websg.id]
     availability_zone = "ap-northeast-2a"
     private_ip = "10.2.0.11"
-    subnet_id = aws_subnet.yh_puba.id
+    subnet_id = aws_subnet.yh_pub[0].id
     user_data = file("wordpress.sh")
 }
 
